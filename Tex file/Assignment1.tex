@@ -1,0 +1,145 @@
+\documentclass{article}
+\usepackage[a4paper, total={7in, 9in}]{geometry}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[latin1]{inputenc}
+
+\title{MA204: Assignment 1}
+\author{Md Shabbir Jamal}
+\date{Department of Computer Science and Engineering\\
+BIT, Mesra, Ranchi\\
+btech10026.20@bitmesra.ac.in
+}
+
+\begin{document}
+\maketitle
+{\Large\textbf{Question 1 :}}
+\textbf {Find a simple root of f (x) = 0 using bisection method. Read the end points of the interval (a, b) in which the root lies, maximum number of iterations n and error tolerance eps.}
+\begin{enumerate}
+\item {
+\bgroup\obeylines{
+f ( x ) = {\mathrm{x}^{3}} + {4\mathrm{x}^{2}} - 10\\
+taking a = 1 ; as f(1) {\textlangle}  0 ,
+\hspace{1cm} b = 2 ; as f(2) {\textrangle}  0
+\egroup       
+}
+\begin{verbatim}
+#include<iostream>
+#include<iomanip>
+#include<math.h>
+using namespace std;
+
+typedef long double ldb;
+ldb eps = 0.0000001;
+
+ldb f(ldb x)
+{
+    return pow(x,3) + 4*pow(x,2) - 10;
+}
+
+int main()
+{
+    ldb st = 0;
+    ldb lt = 0;
+    cout<<"Enter a : ";
+    cin>>st;
+    cout<<"Enter b : ";
+    cin>>lt;
+    ldb value = f((st + lt)/2);
+    int iteration = 0;
+
+    while(abs(value) > eps)
+    {
+       iteration++;
+       if(value*f(st) < 0)
+       {
+           lt = (st + lt)/2; 
+       }
+       if(value*f(lt) < 0)
+       {
+           st = (st + lt)/2; 
+       }
+       value = f((st + lt)/2);
+    }
+    cout<<"Root of the Equation (x^3 + 4x^2 - 10) : { x = ";
+    cout<<fixed<<setprecision(3)<<(st + lt)/2<<" }"<<endl;
+    cout<<"Root found in "<<iteration<<" iterations"<<endl;
+    cout<<"Error % : "<<(abs(1.365 - (round(((st+lt)/2)*1000.0)/1000.0))/1.365)*100<<endl;
+    return 0;
+}
+\end{verbatim}
+\textbf{Output}
+\begin{verbatim}
+Enter a : 1
+Enter b : 2
+Root of the Equation (x^3 + 4x^2 - 10) : { x = 1.365 }
+Root found in 25 iterations
+Error % : 0.000
+\end{verbatim}
+}
+
+\item {
+\bgroup\obeylines{
+f(x) = 	{\cos x} - x{\mathrm{e}^{x}}\\
+taking a = 0 ; as f(0) {\textrangle}  0 ,
+{\hspace{1cm}}{ b = ${\pi}$/2 ; as f(${\pi}$/2) {\textlangle}  0}
+\egroup       
+}
+\begin{verbatim}
+#include<iostream>
+#include<iomanip>
+#include<math.h>
+using namespace std;
+
+typedef long double ldb;
+ldb eps = 0.00000000001;
+#define pi 3.14159265358979323846
+
+ldb f(ldb x)
+{
+    return cos(x) - x*exp(x);
+}
+
+int main()
+{
+    ldb st = 0;
+    ldb lt = 0;
+    cout<<"Enter a : ";
+    cin>>st;
+    cout<<"Enter b : ";
+    cin>>lt;
+    lt = ldb(lt)/2;
+    int iteration = 0;
+    ldb value = f((st + lt)/2);
+    while(abs(value) > eps)
+    {
+       iteration++;
+       if(value*f(st) < 0)
+       {
+           lt = (st + lt)/2; 
+       }
+       if(value*f(lt) < 0)
+       {
+           st = (st + lt)/2; 
+       }
+       value = f((st + lt)/2);
+    }
+    cout<<"Root of the Equation (cos(x) - xe^x) : { x = ";
+    cout<<fixed<<setprecision(3)<<(st + lt)/2<<" }"<<endl;
+    cout<<"Root found in "<<iteration<<" iterations"<<endl;
+    cout<<"Error % : "<<(abs(0.518 - (round(((st+lt)/2)*1000.0)/1000.0))/0.518)*100<<endl;
+    return 0;
+}
+\end{verbatim}
+\textbf{Output}
+\begin{verbatim}
+Enter a : 0
+Enter b : 3.14159265358979323846
+Root of the Equation (cos(x) - xe^x) : { x = 0.518 }
+Root found in 37 iterations
+Error % : 0.000
+\end{verbatim}
+}
+\end{enumerate}
+\end{document}
